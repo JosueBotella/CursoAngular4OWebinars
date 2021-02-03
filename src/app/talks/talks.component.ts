@@ -4,33 +4,24 @@ import { Component, OnInit } from "@angular/core";
   selector: "app-talks",
   //templateUrl: './talks.component.html',
   template: `
-    <input type="text" (keyup)="showTalk($event.target.value)"/>
-    <p [ngStyle]="getColor()" (click)="onClick($event)">{{ title }}</p>
+    <input type="text" (keyup)="onKeyUp(search.value)" #search />
+    <p [ngStyle]="style">{{ title }}</p>
   `,
   styleUrls: ["./talks.component.css"]
 })
 export class TalksComponent implements OnInit {
   title: string = "Angular Rocks";
+  style = {
+    "background-color": "lightgray",
+    padding: "10px"
+  };
+
   constructor() {}
 
-  ngOnInit() {
-    this.title = "Angular Rocks Changing";
-    setInterval(() => this.title, 3000);
-  }
+  ngOnInit() {}
 
-  onClick($event) {
+  onKeyUp(value) {
     this.title = "it's clicked";
-    console.log($event);
-  }
-
-  getColor() {
-    return {
-      "background-color": "lightgray",
-      padding: "19px"
-    };
-  }
-
-  showTalk(value){
-    console.log(value);
+    console.log("clicked!!" + value);
   }
 }
