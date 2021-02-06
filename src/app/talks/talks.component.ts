@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { TalkService } from "./talk.service";
 
 @Component({
   selector: "app-talks",
@@ -6,25 +7,22 @@ import { Component, OnInit } from "@angular/core";
   template: `
     <input type="text" (keyup)="onKeyUp(search.value)" #search />
     <p [ngStyle]="style" *ngFor="let talk of talks; let i = index">
-      <span *ngIf="display(i)">{{ i }}</span> {{ talk.title }}
+      <span *ngIf="display(i)">{{ i }}</span> {{ talk.title }} -- {{talk.date | date}}
     </p>
   `,
   styleUrls: ["./talks.component.css"]
 })
 export class TalksComponent implements OnInit {
-  talks: Array<any> = [
-    { title: "Angular rocks" },
-    { title: "Android 101" },
-    { title: "Android 201" },
-    { title: "Android 301" }
-  ];
+  talks: Array<any> = [];
 
   style = {
     "background-color": "lightgray",
     padding: "10px"
   };
 
-  constructor() {}
+  constructor(private talkService: TalkService) {
+    this.talks = this.talkService.getAllTalks();
+  }
 
   ngOnInit() {}
   display(i) {
